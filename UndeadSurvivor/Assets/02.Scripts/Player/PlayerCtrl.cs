@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerCtrl : MonoBehaviour
 {
-    Vector2 inputVec;
+    public Vector2 inputVec;
     Rigidbody2D rb;
     SpriteRenderer spriter;
     Animator animator;
