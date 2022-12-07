@@ -18,7 +18,7 @@ public class LivingObject : MonoBehaviour, IDamageable
     }
 
     // ÇÇ°Ý
-    public void OnDamage(float damage, Vector2 hitPoint, Vector2 hitNormal)
+    public virtual void OnDamage(float damage, Vector2 hitPoint, Vector2 hitNormal)
     {
         hp -= damage;
 

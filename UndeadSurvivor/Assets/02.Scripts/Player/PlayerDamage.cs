@@ -23,7 +23,39 @@ public class PlayerDamage : LivingObject
         playerCtrl = GetComponent<PlayerCtrl>();
     }
 
-    // Update is called once per frame
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        hpImage.gameObject.SetActive(true);
+        hpImage.fillAmount = 1f;
+
+        playerCtrl.enabled = true;
+    }
+
+    public override void RestoreHp(float newHp)
+    {
+        base.RestoreHp(newHp);
+        hpImage.fillAmount = hp / initHp;
+    }
+
+    public override void OnDamage(float damage, Vector2 hitPoint, Vector2 hitNormal)
+    {
+        if (!dead)
+            source.PlayOneShot(hitClip);
+        base.OnDamage(damage, hitPoint, hitNormal);
+        hpImage.fillAmount = hp / initHp;
+    }
+
+    public override void Die()
+    {
+        base.Die();
+
+        hpImage.gameObject.SetActive(false);
+        source.PlayOneShot(deathClip);
+        animator.SetTrigger("Die");
+
+        playerCtrl.enabled = false;
+    }
     void Update()
     {
         
@@ -31,6 +63,16 @@ public class PlayerDamage : LivingObject
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (!dead)
+        {   
+            // itemÈ¹µæ ÄÚµå
+            //IItem item = other.GetComponent<IItem>();
+
+            //if (item != null)
+            //{
+            //    item.Use(gameObject);
+            //    source.PlayOneShot(itemPickupClip);
+            //}
+        }
     }
 }
