@@ -6,8 +6,7 @@ public class EnemyAI : LivingObject
 {
     [SerializeField]
     LivingObject target;                    // 에너미가 추적할 플레이어 오브젝트
-    [SerializeField]
-    Transform targetTr;                     // 플레이어 오브젝트 트랜스폼
+    Vector2 moveDir;                        // 에너미가 추적할 캐릭터의 방향
 
     public ParticleSystem hitEffect;        // 피격 이펙트
     public AudioClip deathSound;            // 사망소리
@@ -21,8 +20,9 @@ public class EnemyAI : LivingObject
     // 스크립터블 오브젝트로 데이터 받아오기
     public float damage = 20f;              // 공격력
     public float attackSpeed = 0.5f;        // 공격 간격
-    float lastAttackTime;                   // 마지막으로 공격한 시간
-    float moveSpeed;                        // 적 이동속도
+    float lastAttackTime;                  // 마지막으로 공격한 시간
+    [SerializeField]
+    float moveSpeed = 3f;                        // 적 이동속도
 
     void Awake()
     {
@@ -35,7 +35,6 @@ public class EnemyAI : LivingObject
     {
         // 플레이어를 찾음
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<LivingObject>();
-        targetTr = target.GetComponent<Transform>();
     }
     bool hasTarget  // 타겟이 존재하는지 확인할 프로퍼티
     {
@@ -66,8 +65,8 @@ public class EnemyAI : LivingObject
 
     private void Update()
     {
-        if(rb.velocity.x != 0f)        
-            spriteRenderer.flipX = rb.velocity.x < 0;
+        if(moveDir.x != 0f)         // 캐릭터 방향에 따라 flip결정
+            spriteRenderer.flipX = moveDir.x < 0;
 
         //MoveToPlayer();
     }
@@ -76,17 +75,31 @@ public class EnemyAI : LivingObject
         MoveToPlayer();
     }
 
-    private void MoveToPlayer()
+    void MoveToPlayer()
     {
         if (dead)
             return;
         if (hasTarget)
         {
-            if (Vector2.Distance(transform.position, targetTr.position) > 0)
-                transform.position =
-                    Vector2.MoveTowards(transform.position, targetTr.position, moveSpeed * Time.fixedDeltaTime);
+            if (Vector2.Distance(transform.position, target.transform.position) > 0)
+            {
+                moveDir = (target.transform.position - transform.position).normalized;
+                rb.MovePosition(rb.position + moveDir * moveSpeed * Time.fixedDeltaTime);
+            }
+                
         }
-        //else
-        //    rb.velocity = Vector2.zero;
+        else
+            moveDir = Vector2.zero;
+    }
+
+    public override void OnDamage(float damage, Vector2 hitPoint, Vector2 hitNormal)
+    {
+        if(!dead) // 죽지 않았을때 데지미를 입으면
+        {
+
+
+            source.PlayOneShot(hitSound);   
+        }
+        base.OnDamage(damage, hitPoint, hitNormal);
     }
 }

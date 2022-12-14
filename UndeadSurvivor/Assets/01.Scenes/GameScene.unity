@@ -9658,7 +9658,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -9697,12 +9697,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initHp: 0
   target: {fileID: 0}
-  targetTr: {fileID: 0}
   hitEffect: {fileID: 0}
   deathSound: {fileID: 0}
   hitSound: {fileID: 0}
   damage: 20
   attackSpeed: 0.5
+  moveSpeed: 2
 --- !u!114 &1000977107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9715,6 +9715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1516f7df95de69a4db9d34430016fcbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   target: {fileID: 171964973}
   moveSpeed: 2.5
   contactDistance: 0.7
