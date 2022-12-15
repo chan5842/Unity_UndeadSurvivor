@@ -9553,7 +9553,6 @@ GameObject:
   - component: {fileID: 1000977105}
   - component: {fileID: 1000977104}
   - component: {fileID: 1000977106}
-  - component: {fileID: 1000977107}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: ENEMY
@@ -9697,29 +9696,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initHp: 0
   target: {fileID: 0}
-  hitEffect: {fileID: 0}
-  deathSound: {fileID: 0}
-  hitSound: {fileID: 0}
+  deadEffect: {fileID: 4672875942387081032, guid: c466b607a6e5c3747952eb93a58d356b, type: 3}
+  deathSound: {fileID: 8300000, guid: 291608b8d286e2a4580ff36324455ce2, type: 3}
+  hitSound: {fileID: 8300000, guid: 0bddcb411d826e14bb26d40ae45d8e22, type: 3}
   damage: 20
   attackSpeed: 0.5
   moveSpeed: 2
---- !u!114 &1000977107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000977100}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1516f7df95de69a4db9d34430016fcbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  target: {fileID: 171964973}
-  moveSpeed: 2.5
-  contactDistance: 0.7
-  follow: 1
 --- !u!1 &1039979615
 GameObject:
   m_ObjectHideFlags: 0

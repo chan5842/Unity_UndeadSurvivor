@@ -8,7 +8,8 @@ public class EnemyAI : LivingObject
     LivingObject target;                    // 에너미가 추적할 플레이어 오브젝트
     Vector2 moveDir;                        // 에너미가 추적할 캐릭터의 방향
 
-    public ParticleSystem hitEffect;        // 피격 이펙트
+    //public ParticleSystem hitEffect;      // 피격 이펙트
+    public ParticleSystem deadEffect;       // 사망 이펙트
     public AudioClip deathSound;            // 사망소리
     public AudioClip hitSound;              // 피격 소리
 
@@ -30,6 +31,8 @@ public class EnemyAI : LivingObject
         source = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+
+        deadEffect.Stop();
     }
     private void OnEnable()
     {
@@ -85,8 +88,7 @@ public class EnemyAI : LivingObject
             {
                 moveDir = (target.transform.position - transform.position).normalized;
                 rb.MovePosition(rb.position + moveDir * moveSpeed * Time.fixedDeltaTime);
-            }
-                
+            }    
         }
         else
             moveDir = Vector2.zero;
@@ -96,10 +98,61 @@ public class EnemyAI : LivingObject
     {
         if(!dead) // 죽지 않았을때 데지미를 입으면
         {
+            //// 공격받은 지점과 방향으로 파티클 효과 재생
+            //hitEffect.transform.position = hitPoint;
+            //hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
+            //hitEffect.Play();
+            // 피격음 재생
+            source.PlayOneShot(hitSound);
 
-
-            source.PlayOneShot(hitSound);   
+            StartCoroutine(Hit());
         }
         base.OnDamage(damage, hitPoint, hitNormal);
+    }
+
+    IEnumerator Hit()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        spriteRenderer.color = Color.white;
+    }
+
+    public override void Die()
+    {
+        base.Die();
+
+        // 다른 AI를 방해하지 않도록 모든 콜라이더 비활성화
+        Collider2D[] enemyColliders = GetComponents<Collider2D>();
+        foreach(var col in enemyColliders)
+        {
+            col.enabled = false;
+        }
+
+        // 이동을 멈추고 Die애니메이션 실행 및 사망 소리 재생
+        moveDir = Vector2.zero;
+        animator.SetTrigger("Die");
+        source.PlayOneShot(deathSound);
+        deadEffect.Play();
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if(!dead && Time.time >= lastAttackTime + attackSpeed)
+        {
+            LivingObject attackTarget = other.GetComponent<LivingObject>();
+
+            if(attackTarget != null && attackTarget == target)
+            {
+                lastAttackTime = Time.time;
+
+                // 상대방의 피격 위치와 피격 방향을 근삿값으로 계산
+                Vector2 hitPoint = other.ClosestPoint(transform.position);
+                Vector2 hitNormal = transform.position - other.transform.position;
+
+                // 공격
+                attackTarget.OnDamage(damage, hitPoint, hitNormal);
+            }
+           
+        }
     }
 }
