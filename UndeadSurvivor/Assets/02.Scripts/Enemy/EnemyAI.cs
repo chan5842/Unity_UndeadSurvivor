@@ -12,11 +12,13 @@ public class EnemyAI : LivingObject
     public ParticleSystem deadEffect;       // 사망 이펙트
     public AudioClip deathSound;            // 사망소리
     public AudioClip hitSound;              // 피격 소리
+    public EnemyData enemyData;             // 에너미 데이터(이름, 공격력, 체력, 이동속도, 공격속도)
 
     Animator animator;
     AudioSource source;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
+    
 
     // 스크립터블 오브젝트로 데이터 받아오기
     public float damage = 20f;              // 공격력
@@ -34,8 +36,9 @@ public class EnemyAI : LivingObject
 
         deadEffect.Stop();
     }
-    private void OnEnable()
+     protected override void OnEnable()
     {
+        base.OnEnable();
         // 플레이어를 찾음
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<LivingObject>();
     }
@@ -63,15 +66,12 @@ public class EnemyAI : LivingObject
 
     private void Start()
     {
-        //StartCoroutine(UpdatePath());
     }
 
     private void Update()
     {
         if(moveDir.x != 0f)         // 캐릭터 방향에 따라 flip결정
             spriteRenderer.flipX = moveDir.x < 0;
-
-        //MoveToPlayer();
     }
     void FixedUpdate()
     {
@@ -91,17 +91,21 @@ public class EnemyAI : LivingObject
             }    
         }
         else
+        {
             moveDir = Vector2.zero;
+        }
+            
     }
 
     public override void OnDamage(float damage, Vector2 hitPoint, Vector2 hitNormal)
     {
-        if(!dead) // 죽지 않았을때 데지미를 입으면
+        if(!dead) // 죽지 않았을때 데미지를 입으면
         {
             //// 공격받은 지점과 방향으로 파티클 효과 재생
             //hitEffect.transform.position = hitPoint;
             //hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
             //hitEffect.Play();
+
             // 피격음 재생
             source.PlayOneShot(hitSound);
 

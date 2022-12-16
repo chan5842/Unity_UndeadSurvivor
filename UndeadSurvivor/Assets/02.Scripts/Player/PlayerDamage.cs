@@ -8,11 +8,14 @@ public class PlayerDamage : LivingObject
     public Image hpImage;       // 체력 UI
 
     public AudioClip deathClip; // 사망 소리
-    public AudioClip hitClip;   // 피격 소리
+    public AudioClip[] hitClip; // 피격 소리 배열
     public AudioClip pickUpClip;// 아이템 줍줍 소리
+
+    public ParticleSystem destroyEffect; // 사망시 터지는 이펙트
 
     AudioSource source;
     Animator animator;
+    SpriteRenderer spriteRenderer;
 
     PlayerCtrl playerCtrl;
 
@@ -20,6 +23,8 @@ public class PlayerDamage : LivingObject
     {
         source = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         playerCtrl = GetComponent<PlayerCtrl>();
     }
 
@@ -29,6 +34,7 @@ public class PlayerDamage : LivingObject
         hpImage.gameObject.SetActive(true);
         hpImage.fillAmount = 1f;
 
+        destroyEffect.Stop();
         playerCtrl.enabled = true;
     }
 
@@ -40,10 +46,20 @@ public class PlayerDamage : LivingObject
 
     public override void OnDamage(float damage, Vector2 hitPoint, Vector2 hitNormal)
     {
-        if (!dead)
-            source.PlayOneShot(hitClip);
+        if (!dead)  // 죽지 않았다면 데미지를 받을 때 2개 중 하나의 피격 소리 재생
+            source.PlayOneShot(hitClip[Random.Range(0,1)]);
+    
         base.OnDamage(damage, hitPoint, hitNormal);
         hpImage.fillAmount = hp / initHp;
+        StartCoroutine(OnHit());
+        
+    }
+
+    IEnumerator OnHit()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.25f);
+        spriteRenderer.color = Color.white;
     }
 
     public override void Die()
@@ -52,7 +68,8 @@ public class PlayerDamage : LivingObject
 
         hpImage.gameObject.SetActive(false);
         source.PlayOneShot(deathClip);
-        animator.SetTrigger("Die");
+        animator.SetTrigger("Dead");
+        destroyEffect.Play();
 
         playerCtrl.enabled = false;
     }
