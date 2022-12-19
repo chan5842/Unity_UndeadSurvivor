@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class Reposition : MonoBehaviour
 {
+    [SerializeField]
+    CapsuleCollider2D capCol;
+
     readonly string areaTag = "AREA";
+
+    private void Awake()
+    {
+        capCol = GetComponent<CapsuleCollider2D>();
+    }
     private void OnTriggerExit2D(Collider2D col)
     {
         if (!col.CompareTag(areaTag))
@@ -22,14 +30,19 @@ public class Reposition : MonoBehaviour
 
         switch(transform.tag)
         {
+            // 시야 범위에서 벗어난 경우 재배치
             case "GROUND":
                 if (diffX > diffY)
                     transform.Translate(Vector3.right * dirX * 40);
                 else if(diffX < diffY)
                     transform.Translate(Vector3.up * dirY * 40);
                 break;
-            case "ENEMY":
-
+            case "ENEMY":   // 에너미 재배치 로직
+                if (capCol.enabled)
+                {
+                    transform.Translate(playerDir * 20 +
+                    new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f));
+                }
                 break;
         }
 

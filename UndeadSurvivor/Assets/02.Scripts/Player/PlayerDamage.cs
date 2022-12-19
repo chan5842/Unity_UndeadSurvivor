@@ -13,9 +13,12 @@ public class PlayerDamage : LivingObject
 
     public ParticleSystem destroyEffect; // ªÁ∏¡Ω√ ≈Õ¡ˆ¥¬ ¿Ã∆Â∆Æ
 
+    Collider2D col;
+
     AudioSource source;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    public GameObject Weapon;
 
     PlayerCtrl playerCtrl;
 
@@ -24,6 +27,7 @@ public class PlayerDamage : LivingObject
         source = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        col = GetComponent<Collider2D>();
 
         playerCtrl = GetComponent<PlayerCtrl>();
     }
@@ -66,7 +70,9 @@ public class PlayerDamage : LivingObject
     {
         base.Die();
 
+        col.enabled = false;
         hpImage.gameObject.SetActive(false);
+        Weapon.SetActive(false);
         source.PlayOneShot(deathClip);
         animator.SetTrigger("Dead");
         destroyEffect.Play();

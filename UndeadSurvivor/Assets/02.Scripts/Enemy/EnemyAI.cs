@@ -68,11 +68,6 @@ public class EnemyAI : LivingObject
     {
     }
 
-    private void Update()
-    {
-        if(moveDir.x != 0f)         // 캐릭터 방향에 따라 flip결정
-            spriteRenderer.flipX = moveDir.x < 0;
-    }
     void FixedUpdate()
     {
         MoveToPlayer();
@@ -87,14 +82,22 @@ public class EnemyAI : LivingObject
             if (Vector2.Distance(transform.position, target.transform.position) > 0)
             {
                 moveDir = (target.transform.position - transform.position).normalized;
-                rb.MovePosition(rb.position + moveDir * moveSpeed * Time.fixedDeltaTime);
+                Vector2 nextVec = moveDir * moveSpeed * Time.fixedDeltaTime;
+                rb.MovePosition(rb.position + nextVec);
+                // 물리 속도가 이동에 영향을 주지 않도록 추가
+                rb.velocity = Vector2.zero;
             }    
         }
         else
         {
             moveDir = Vector2.zero;
         }
-            
+    }
+
+    private void LateUpdate()
+    {
+        if (moveDir.x != 0f)         // 캐릭터 방향에 따라 flip결정
+            spriteRenderer.flipX = moveDir.x < 0;
     }
 
     public override void OnDamage(float damage, Vector2 hitPoint, Vector2 hitNormal)
