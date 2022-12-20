@@ -12,6 +12,13 @@ public class Timer : MonoBehaviour
     int sec;                    // 초
     bool isEnded;               // 타이머 종료 여부
 
+    PlayerDamage playerDamage;
+
+    private void Awake()
+    {
+        playerDamage = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDamage>();
+    }
+
     void OnEnable()
     {
         ResetTimer();           // 시작시 Reset시킴
@@ -20,6 +27,8 @@ public class Timer : MonoBehaviour
     void FixedUpdate()          // 고정된 프레임으로 시간을 흐르게 함
     {
         if (isEnded)            // 타이머가 종료됬다면 실행하지 않음
+            return;
+        if (playerDamage.dead)
             return;
         CheckTimer();           // 시간 체크
     }
