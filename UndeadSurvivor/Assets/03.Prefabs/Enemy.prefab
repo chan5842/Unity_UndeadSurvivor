@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 4356753125480215862}
   - component: {fileID: 4356753125480215861}
   - component: {fileID: 4356753125480215849}
-  - component: {fileID: 4356753125480215852}
   - component: {fileID: 4356753125480215848}
   - component: {fileID: 4356753125480215850}
   - component: {fileID: 4356753125480215851}
@@ -207,32 +206,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.7, y: 0.9}
   m_Direction: 0
---- !u!61 &4356753125480215852
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4356753125480215860}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.9}
-  m_EdgeRadius: 0
 --- !u!50 &4356753125480215848
 Rigidbody2D:
   serializedVersion: 4
@@ -274,7 +247,7 @@ MonoBehaviour:
   enemyData: {fileID: 0}
   damage: 20
   attackSpeed: 0.5
-  moveSpeed: 1.5
+  moveSpeed: 0
 --- !u!82 &4356753125480215851
 AudioSource:
   m_ObjectHideFlags: 0

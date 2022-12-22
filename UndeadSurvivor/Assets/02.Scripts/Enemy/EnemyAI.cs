@@ -142,24 +142,45 @@ public class EnemyAI : LivingObject
         deadEffect.Play();
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnCollisionStay2D(Collision2D col)
     {
-        if(!dead && Time.time >= lastAttackTime + attackSpeed)
+        if (!dead && Time.time >= lastAttackTime + attackSpeed)
         {
-            LivingObject attackTarget = other.GetComponent<LivingObject>();
+            LivingObject attackTarget = col.collider.GetComponent<LivingObject>();
 
-            if(attackTarget != null && attackTarget == target)
+            if (attackTarget != null && attackTarget == target)
             {
                 lastAttackTime = Time.time;
 
                 // 상대방의 피격 위치와 피격 방향을 근삿값으로 계산
-                Vector2 hitPoint = other.ClosestPoint(transform.position);
-                Vector2 hitNormal = transform.position - other.transform.position;
+                Vector2 hitPoint = col.collider.ClosestPoint(transform.position);
+                Vector2 hitNormal = transform.position - col.collider.transform.position;
 
                 // 공격
                 attackTarget.OnDamage(damage, hitPoint, hitNormal);
             }
-           
+
         }
     }
+
+    //private void OnTriggerStay2D(Collider2D other)
+    //{
+    //    if(!dead && Time.time >= lastAttackTime + attackSpeed)
+    //    {
+    //        LivingObject attackTarget = other.GetComponent<LivingObject>();
+
+    //        if(attackTarget != null && attackTarget == target)
+    //        {
+    //            lastAttackTime = Time.time;
+
+    //            // 상대방의 피격 위치와 피격 방향을 근삿값으로 계산
+    //            Vector2 hitPoint = other.ClosestPoint(transform.position);
+    //            Vector2 hitNormal = transform.position - other.transform.position;
+
+    //            // 공격
+    //            attackTarget.OnDamage(damage, hitPoint, hitNormal);
+    //        }
+           
+    //    }
+    //}
 }

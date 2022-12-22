@@ -5,14 +5,16 @@ using UnityEngine;
 public class Reposition : MonoBehaviour
 {
     [SerializeField]
-    CapsuleCollider2D capCol;
+    Collider2D enemyCol;
 
     readonly string areaTag = "AREA";
 
     private void Awake()
     {
-        capCol = GetComponent<CapsuleCollider2D>();
+        enemyCol = GetComponent<CapsuleCollider2D>();
     }
+
+    
     private void OnTriggerExit2D(Collider2D col)
     {
         if (!col.CompareTag(areaTag))
@@ -38,7 +40,7 @@ public class Reposition : MonoBehaviour
                     transform.Translate(Vector3.up * dirY * 40);
                 break;
             case "ENEMY":   // 에너미 재배치 로직
-                if (capCol.enabled)
+                if (enemyCol.enabled)
                 {
                     transform.Translate(playerDir * 20 +
                     new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f));
