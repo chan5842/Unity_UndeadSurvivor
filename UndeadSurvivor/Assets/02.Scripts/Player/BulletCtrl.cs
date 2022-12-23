@@ -14,7 +14,7 @@ public class BulletCtrl : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         tr = transform;
 
-        damage = 1f;       // 게임 매니저에서 데이터를 받아와 데미지로 설정
+        damage = 10f;       // 게임 매니저에서 데이터를 받아와 데미지로 설정
     }
 
     private void OnEnable()
@@ -39,6 +39,15 @@ public class BulletCtrl : MonoBehaviour
         // 캐릭터 시야로부터 벗어나면 총알 비활성화
         if(col.CompareTag("AREA"))
         {
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("ENEMY"))
+        {
+            other.GetComponent<EnemyAI>().OnDamage(damage, transform.position, transform.position.normalized);
             gameObject.SetActive(false);
         }
     }

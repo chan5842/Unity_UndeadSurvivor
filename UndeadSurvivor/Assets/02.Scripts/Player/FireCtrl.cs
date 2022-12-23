@@ -4,20 +4,28 @@ using UnityEngine;
 
 public class FireCtrl : MonoBehaviour
 {
-    Transform firePos;      // 발사 위치
-    public Transform target;       // 발사 타겟(모바일 게임이며 자동으로 가장 가까운적을 향해 발사함)
-    
+    public Transform firePos;       // 발사 위치
+    public Transform target;        // 발사 타겟(모바일 게임이며 자동으로 가장 가까운적을 향해 발사함)
+    public float attackSpeed;       // 공격 속도(무기마다 다름)
+    float timer;
+
     void Start()
     {
-        firePos = transform.GetChild(5).transform;
+        
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (GetComponent<PlayerDamage>().dead)
+            return;
+
+        timer += Time.fixedDeltaTime;
+        if(timer > attackSpeed) // 공격속도 간격으로 총을 발사
         {
+            timer = 0f;
             Fire();
         }
+            
 
     }
 

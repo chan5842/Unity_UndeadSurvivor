@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public PoolManager pool;
     public PlayerCtrl playerCtrl;
 
     // 총알 프리펩 오브젝트 풀링

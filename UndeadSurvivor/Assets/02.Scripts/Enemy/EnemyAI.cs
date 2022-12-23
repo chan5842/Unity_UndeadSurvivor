@@ -36,11 +36,21 @@ public class EnemyAI : LivingObject
 
         deadEffect.Stop();
     }
-     protected override void OnEnable()
+    protected override void OnEnable()
     {
         base.OnEnable();
         // 플레이어를 찾음
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<LivingObject>();
+        target = GameManager.instance.playerCtrl.GetComponent<LivingObject>();
+    }
+
+    private void OnDisable()
+    {
+        Collider2D[] enemyColliders = GetComponents<Collider2D>();
+        foreach (var col in enemyColliders)
+        {
+            col.enabled = true;
+        }
+        transform.position = Vector2.zero;
     }
     bool hasTarget  // 타겟이 존재하는지 확인할 프로퍼티
     {
@@ -111,7 +121,7 @@ public class EnemyAI : LivingObject
 
             // 피격음 재생
             source.PlayOneShot(hitSound);
-
+            //animator.SetTrigger("Hit");
             StartCoroutine(Hit());
         }
         base.OnDamage(damage, hitPoint, hitNormal);
@@ -137,9 +147,17 @@ public class EnemyAI : LivingObject
 
         // 이동을 멈추고 Die애니메이션 실행 및 사망 소리 재생
         moveDir = Vector2.zero;
-        animator.SetTrigger("Die");
+        animator.SetBool("Dead", true);
         source.PlayOneShot(deathSound);
         deadEffect.Play();
+
+        StartCoroutine(EnemyDie());       
+    }
+
+    IEnumerator EnemyDie()
+    {
+        yield return new WaitForSeconds(2f);
+        gameObject.SetActive(false);
     }
 
     private void OnCollisionStay2D(Collision2D col)
