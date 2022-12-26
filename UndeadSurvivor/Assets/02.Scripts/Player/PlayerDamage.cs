@@ -5,21 +5,25 @@ using UnityEngine.UI;
 
 public class PlayerDamage : LivingObject
 {
+    // UI
     public Image hpImage;       // 체력 UI
 
+    // 이펙트
     public AudioClip deathClip; // 사망 소리
     public AudioClip[] hitClip; // 피격 소리 배열
     public AudioClip pickUpClip;// 아이템 줍줍 소리
-
     public ParticleSystem destroyEffect; // 사망시 터지는 이펙트
 
     Collider2D col;
 
+    // 컴포넌트
     AudioSource source;
     Animator animator;
     SpriteRenderer spriteRenderer;
+
     public GameObject Weapon;
 
+    // 스크립트
     PlayerCtrl playerCtrl;
 
     void Awake()
@@ -45,7 +49,7 @@ public class PlayerDamage : LivingObject
     public override void RestoreHp(float newHp)
     {
         base.RestoreHp(newHp);
-        hpImage.fillAmount = hp / initHp;
+        hpImage.fillAmount = hp / maxHP;
     }
 
     public override void OnDamage(float damage, Vector2 hitPoint, Vector2 hitNormal)
@@ -54,7 +58,7 @@ public class PlayerDamage : LivingObject
             source.PlayOneShot(hitClip[Random.Range(0,1)]);
     
         base.OnDamage(damage, hitPoint, hitNormal);
-        hpImage.fillAmount = hp / initHp;
+        hpImage.fillAmount = hp / maxHP;
         StartCoroutine(OnHit());
         
     }

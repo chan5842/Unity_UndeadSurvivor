@@ -6,8 +6,8 @@ public class Timer : MonoBehaviour
 {
     public Text timerText;      // 타이머 UI
     float startTime;            // 타이머 시작 시간(0분 0초)
-    float curTime;              // 현재 시간
-    float maxTime = 300f;       // 최대 시간(5분)
+    public float curTime;              // 현재 시간
+    public float maxTime = 300f;       // 최대 시간(5분)
     int min;                    // 분
     int sec;                    // 초
     bool isEnded;               // 타이머 종료 여부

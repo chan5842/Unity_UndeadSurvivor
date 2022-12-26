@@ -6,14 +6,23 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
+
     PlayerDamage playerDamage;
 
-    public Image GameOverImg;
+    public Canvas UI;
+    [SerializeField]
+    Image GameOverImg;
+    [SerializeField]
+    Text killText;
+
+    int killCount = 0;
 
     void Awake()
     {
         instance = this;
         playerDamage = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDamage>();
+        GameOverImg = UI.transform.GetChild(4).GetComponent<Image>();
+        killText = UI.transform.GetChild(1).GetChild(1).GetComponent<Text>();
     }
 
     private void Start()
@@ -28,5 +37,11 @@ public class UIManager : MonoBehaviour
             //GameOverImg.enabled = true;
             GameOverImg.GetComponent<Animator>().SetTrigger("Dead");
         }
+    }
+
+    public void InKillCount()
+    {
+        killCount++;
+        killText.text = killCount.ToString();
     }
 }

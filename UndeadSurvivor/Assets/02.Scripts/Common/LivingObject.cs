@@ -6,7 +6,7 @@ using System;
 // 모든 살아있는 오브젝트가 상속받을 스크립트
 public class LivingObject : MonoBehaviour, IDamageable
 {
-    public float initHp;                             // 시작시 체력
+    public float maxHP;                              // 최대 체력
     public float hp { get; protected set; }          // 현재 체력
     public bool dead { get; protected set; }         // 사망 상태
     public event Action onDeath;                     // 사망 시 발동할 이벤트
@@ -14,7 +14,7 @@ public class LivingObject : MonoBehaviour, IDamageable
     protected virtual void OnEnable()
     {
         dead = false;
-        hp = initHp;
+        hp = maxHP;
     }
 
     // 피격
