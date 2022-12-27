@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DataInfo;
 
 public class EnemyAI : LivingObject
 {
@@ -19,12 +20,13 @@ public class EnemyAI : LivingObject
     Rigidbody2D rb;
     public RuntimeAnimatorController[] animCon; // 애니메이터 지정
 
-
     // 데이터 받아오기
     public float damage;              // 공격력
     public float attackSpeed = 0.5f;  // 공격 간격
     public float lastAttackTime;      // 마지막으로 공격한 시간
     public float moveSpeed;           // 적 이동속도
+
+    int enemyType;
 
 
     void Awake()
@@ -52,6 +54,7 @@ public class EnemyAI : LivingObject
         maxHP = data.hp;
         hp = maxHP;
         damage = data.damage;
+        enemyType = data.spriteType;
     }
 
     private void OnDisable()
@@ -156,7 +159,7 @@ public class EnemyAI : LivingObject
 
         // 다른 AI를 방해하지 않도록 모든 콜라이더 비활성화
         Collider2D[] enemyColliders = GetComponents<Collider2D>();
-        foreach(var col in enemyColliders)
+        foreach (var col in enemyColliders)
         {
             col.enabled = false;
         }
@@ -167,9 +170,36 @@ public class EnemyAI : LivingObject
         source.PlayOneShot(deathSound);
         deadEffect.Play();
 
-        UIManager.instance.InKillCount();
+        UIManager.instance.InKillCount();   // UI 킬 카운트 증가
 
-        StartCoroutine(EnemyDie());       
+        //ExpDrop();
+        ItemDrop();
+
+        StartCoroutine(EnemyDie());
+    }
+
+    private void ExpDrop()
+    {
+        GameObject exp = GameManager.instance.pool.GetExpPool(enemyType / 3);
+        exp.transform.position = transform.position;
+    }
+
+    void ItemDrop()
+    {
+        int rand = Random.Range(0, 9); // 0 ~ 9(10%확률로 아이템 드롭) 
+
+        if (rand == 0)
+        {
+            GameObject heal = GameManager.instance.pool.GetItemPool(rand);
+            heal.transform.position = transform.position;
+        }
+        else if (rand == 1)
+        {
+            GameObject magnet = GameManager.instance.pool.GetItemPool(rand);
+            magnet.transform.position = transform.position;
+        }
+        else
+            ExpDrop();  // 80%확률로 경험치 드롭
     }
 
     IEnumerator EnemyDie()

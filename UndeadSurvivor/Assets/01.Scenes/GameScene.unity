@@ -4816,6 +4816,12 @@ MonoBehaviour:
   pickUpClip: {fileID: 8300000, guid: d3ad199125032854087bf63abdec798a, type: 3}
   destroyEffect: {fileID: 494903953}
   Weapon: {fileID: 1568393816}
+  character_Level: 1
+  EXP: 0
+  needExp: 00000000050000000a000000120000001d0000002b0000003c0000005000000067000000810000009e000000be000000
+  EXPImg: {fileID: 278379236}
+  LevelText: {fileID: 1755649653}
+  LevelUpClip: {fileID: 8300000, guid: 64795b87003c2324fa0814fbc336066c, type: 3}
 --- !u!82 &171964977
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5101,7 +5107,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.224
+  m_FillAmount: 0.061
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -5304,8 +5310,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9b55f482a4d7a46b7c240fd007e83f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs:
+  enemyPrefabs:
   - {fileID: 4356753125480215860, guid: 2b1486d184dff13499ef8d3cb519df65, type: 3}
+  expPrefabs:
+  - {fileID: 475622603606457715, guid: 7992dd775f1466d40a7c3e172c37adf1, type: 3}
+  - {fileID: 9105271910592973055, guid: 9e3734f0072ebd0448a59e8b9d080d29, type: 3}
+  - {fileID: 5918865639136528260, guid: 3867c106ce210c743963eb52166134de, type: 3}
+  itemPrefabs:
+  - {fileID: 4904290640536008796, guid: 2d5fa2429d5aeb746beec2cd5b8b7197, type: 3}
+  - {fileID: 4905949490149360085, guid: 9549dca685104114a9079e5784ea1ab5, type: 3}
 --- !u!1 &592755316
 GameObject:
   m_ObjectHideFlags: 0
@@ -19234,7 +19247,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 0
 --- !u!222 &1327465094
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20065,7 +20078,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Lv. 4
+  m_Text: Lv. 1
 --- !u!222 &1755649654
 CanvasRenderer:
   m_ObjectHideFlags: 0
