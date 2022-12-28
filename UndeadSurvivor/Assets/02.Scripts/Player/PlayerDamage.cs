@@ -94,6 +94,7 @@ public class PlayerDamage : LivingObject
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.25f);
         spriteRenderer.color = Color.white;
+        Debug.Log(hp);
     }
 
     public override void Die()

@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 475622603606457714}
   - component: {fileID: 475622603606457727}
   - component: {fileID: 475622603606457712}
-  m_Layer: 0
+  - component: {fileID: 343157066582504621}
+  m_Layer: 8
   m_Name: Exp 0
   m_TagString: ITEM
   m_Icon: {fileID: 0}
@@ -97,9 +98,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfo:
+    ID: 0
     type: 0
     name: S_EXP
     value: 2
+  cols: []
+  expLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!61 &475622603606457712
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -126,3 +132,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.1}
   m_EdgeRadius: 0
+--- !u!114 &343157066582504621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475622603606457715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38964dafeece1fe40963e9c26ac21df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

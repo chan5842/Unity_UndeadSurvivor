@@ -7,6 +7,17 @@ public class ItemData : MonoBehaviour
 {
     public Item itemInfo;
 
+    [SerializeField]
+    Collider2D[] cols;
+
+    [SerializeField]
+    LayerMask expLayer;
+
+    private void Start()
+    {
+        expLayer = LayerMask.NameToLayer("EXP");
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -20,12 +31,11 @@ public class ItemData : MonoBehaviour
                     other.GetComponent<PlayerDamage>().RestoreHp(itemInfo.value);
                     break;
                 case Item.ItemType.MAGNET:
-                    Collider2D col = Physics2D.OverlapCircle(other.transform.position, 20f);
-                    if(col.gameObject.GetComponent<ItemData>().itemInfo.type == Item.ItemType.EXP)
+                    int layerMask = 1 << expLayer;
+                    cols = Physics2D.OverlapCircleAll(other.transform.position, 20f, layerMask);
+                    foreach (var col in cols)
                     {
-                        // 플레이어에게 자석처럼 끌려오는 코드
-                        Debug.Log("hi");
-                        
+                        col.gameObject.GetComponent<ItemExp>().isCollect = true;
                     }
                     break;
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5918865639136528261}
   - component: {fileID: 5918865639136528259}
   - component: {fileID: 5918865639136528256}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Exp 2
   m_TagString: ITEM
   m_Icon: {fileID: 0}
@@ -101,6 +101,10 @@ MonoBehaviour:
     type: 0
     name: L_EXP
     value: 10
+  cols: []
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!61 &5918865639136528256
 BoxCollider2D:
   m_ObjectHideFlags: 0
