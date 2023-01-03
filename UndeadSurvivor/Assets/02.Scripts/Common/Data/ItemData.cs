@@ -32,7 +32,7 @@ public class ItemData : MonoBehaviour
                     break;
                 case Item.ItemType.MAGNET:
                     int layerMask = 1 << expLayer;
-                    cols = Physics2D.OverlapCircleAll(other.transform.position, 20f, layerMask);
+                    cols = Physics2D.OverlapCircleAll(other.transform.position, itemInfo.value, layerMask);
                     foreach (var col in cols)
                     {
                         col.gameObject.GetComponent<ItemExp>().isCollect = true;

@@ -69,5 +69,14 @@ public class GameManager : MonoBehaviour
         {
             gameTime = timer.maxTime;
         }
+
+        //if (playerCtrl.gameObject.GetComponent<PlayerDamage>().dead)
+        if (PlayerManager.instance.playerDamage.dead)
+        {
+            Debug.Log("Ä³¸¯ÅÍ »ç¸Á");
+            return;
+        }
+            
+            
     }
 }

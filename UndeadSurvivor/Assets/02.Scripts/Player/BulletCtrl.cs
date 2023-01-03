@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class BulletCtrl : MonoBehaviour
 {
+    public enum BulletType
+    {
+        Normal,     // 총알(적중시 적이 조금 밀려난다)
+        Shovel,     // 삽(일정 시간동안 캐릭터 주위를 공전하며 적에게 데미지)
+        Fork,       // 삼지창(적중시 적을 많이 밀려나게 한다)
+        Sickle      // 낫(위로 발사하여 포물선을 그리며 떨어지며 적중시 적이 조금 밀려난다)
+    };
+
     Rigidbody2D rb;
     Transform tr;
     public float Speed = 10f;
     public float damage;
+    public BulletType type;
 
     void Awake()
     {
@@ -29,11 +38,13 @@ public class BulletCtrl : MonoBehaviour
         // 비활성화시 초기화
         tr.position = Vector2.zero;
         tr.rotation = Quaternion.identity;
-        rb.Sleep(); // 물리 행동 멈춤
+        if(type == BulletType.Normal)
+            rb.Sleep(); // 물리 행동 멈춤
     }
     void Update()
     {
-        tr.Translate(Vector2.right * Time.deltaTime * Speed);    // 총알 앞 방향으로 계속 나아감
+        if(type == BulletType.Normal)
+            tr.Translate(Vector2.right * Time.deltaTime * Speed);    // 총알 앞 방향으로 계속 나아감
     }
     private void OnTriggerExit2D(Collider2D col)
     {
@@ -50,7 +61,18 @@ public class BulletCtrl : MonoBehaviour
         if(other.CompareTag("ENEMY"))
         {
             other.GetComponent<EnemyAI>().OnDamage(damage, transform.position, transform.position.normalized);
-            gameObject.SetActive(false);
+            if(type == BulletType.Normal)
+                gameObject.SetActive(false);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("ENEMY"))
+        {
+            col.gameObject.GetComponent<EnemyAI>().OnDamage(damage, transform.position, transform.position.normalized);
+            //gameObject.SetActive(false);
         }
     }
 }
+

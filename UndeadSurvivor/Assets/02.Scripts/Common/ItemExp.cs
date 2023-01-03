@@ -22,7 +22,7 @@ public class ItemExp : MonoBehaviour
         {
             yield return 1f;
             if (isCollect)
-                transform.position = Vector3.Lerp(transform.position, Player.transform.position, 0.01f);            
+                transform.position = Vector3.Lerp(transform.position, Player.transform.position, 0.05f);            
         }
     }
     void Update()

@@ -126,4 +126,8 @@ MonoBehaviour:
     ID: 4
     type: 2
     name: Magnet(Range)
-    value: 20
+    value: 100
+  cols: []
+  expLayer:
+    serializedVersion: 2
+    m_Bits: 0

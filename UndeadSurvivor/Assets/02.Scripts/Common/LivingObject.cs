@@ -21,6 +21,7 @@ public class LivingObject : MonoBehaviour, IDamageable
     public virtual void OnDamage(float damage, Vector2 hitPoint, Vector2 hitNormal)
     {
         hp -= damage;
+        hp = Mathf.Clamp(hp, 0, maxHP);
 
         if(hp <= 0 && !dead)
         {
