@@ -4688,6 +4688,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputVec: {x: 0, y: 0}
   moveSpeed: 3
+  cols: []
+  expLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!70 &171964970
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -4873,6 +4877,7 @@ MonoBehaviour:
   EXPImg: {fileID: 278379236}
   LevelText: {fileID: 1755649653}
   LevelUpClip: {fileID: 8300000, guid: 64795b87003c2324fa0814fbc336066c, type: 3}
+  isDebug: 1
 --- !u!82 &171964977
 AudioSource:
   m_ObjectHideFlags: 0

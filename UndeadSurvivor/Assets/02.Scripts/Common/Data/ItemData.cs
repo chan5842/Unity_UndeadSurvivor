@@ -31,12 +31,13 @@ public class ItemData : MonoBehaviour
                     other.GetComponent<PlayerDamage>().RestoreHp(itemInfo.value);
                     break;
                 case Item.ItemType.MAGNET:
-                    int layerMask = 1 << expLayer;
-                    cols = Physics2D.OverlapCircleAll(other.transform.position, itemInfo.value, layerMask);
-                    foreach (var col in cols)
-                    {
-                        col.gameObject.GetComponent<ItemExp>().isCollect = true;
-                    }
+                    //int layerMask = 1 << expLayer;
+                    //cols = Physics2D.OverlapCircleAll(other.transform.position, itemInfo.value, layerMask);
+                    //foreach (var col in cols)
+                    //{
+                    //    col.gameObject.GetComponent<ItemExp>().isCollect = true;
+                    //}
+                    PlayerManager.instance.playerCtrl.MagnetExp();
                     break;
 
             }

@@ -12,8 +12,6 @@ public class ItemExp : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-
-        StartCoroutine(Collect());
     }
 
     IEnumerator Collect()
@@ -24,6 +22,12 @@ public class ItemExp : MonoBehaviour
             if (isCollect)
                 transform.position = Vector3.Lerp(transform.position, Player.transform.position, 0.05f);            
         }
+    }
+
+    private void OnEnable()
+    {
+        isCollect = false;
+        StartCoroutine(Collect());
     }
     void Update()
     {

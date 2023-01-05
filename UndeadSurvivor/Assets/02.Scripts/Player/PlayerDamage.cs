@@ -31,6 +31,8 @@ public class PlayerDamage : LivingObject
     public Text LevelText;
     public AudioClip LevelUpClip;
 
+    public bool isDebug;
+
     // 스크립트
     PlayerCtrl playerCtrl;
 
@@ -83,9 +85,12 @@ public class PlayerDamage : LivingObject
         if (!dead)  // 죽지 않았다면 데미지를 받을 때 2개 중 하나의 피격 소리 재생
             source.PlayOneShot(hitClip[Random.Range(0,1)]);
     
-        base.OnDamage(damage, hitPoint, hitNormal);
-        hpImage.fillAmount = hp / maxHP;
-        StartCoroutine(OnHit());
+        if(!isDebug)
+        {
+            base.OnDamage(damage, hitPoint, hitNormal);
+            hpImage.fillAmount = hp / maxHP;
+            StartCoroutine(OnHit());
+        }       
         
     }
 

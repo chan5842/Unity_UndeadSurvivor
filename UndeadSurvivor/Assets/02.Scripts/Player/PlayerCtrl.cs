@@ -10,12 +10,19 @@ public class PlayerCtrl : MonoBehaviour
     SpriteRenderer spriter;
     Animator animator;
     public float moveSpeed;
+    [SerializeField]
+    Collider2D[] cols;
 
-    void Start()
+    [SerializeField]
+    LayerMask expLayer;
+
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriter = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        expLayer = LayerMask.NameToLayer("EXP");
     }
 
     // InputSystem을 사용하므로 필요 없어짐
@@ -48,5 +55,15 @@ public class PlayerCtrl : MonoBehaviour
     void OnMove(InputValue value)
     {
         inputVec = value.Get<Vector2>();
+    }
+
+    public void MagnetExp()
+    {
+        int layerMask = 1 << expLayer;
+        cols = Physics2D.OverlapCircleAll(transform.position, 100f, layerMask);
+        foreach (var col in cols)
+        {
+            col.gameObject.GetComponent<ItemExp>().isCollect = true;
+        }
     }
 }
